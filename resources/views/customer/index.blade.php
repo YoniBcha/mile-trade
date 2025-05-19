@@ -6,12 +6,12 @@
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-md-2">
-                            <a href="/create-customer.html" class="btn" style="background-color: #4643d3; color: white;"><i
-                                    class="fas fa-plus"></i> Create
+                        <div class="col-md-4">
+                            <a href="/create-customer.html" class="btn fs-[1px]"
+                                style="background-color: #4643d3; color: white;"><i class="fas fa-plus"></i> Create
                                 Customer</a>
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <form action="">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Search anything..."
