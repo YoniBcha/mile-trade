@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('birth_date')->nullable();
             $table->text('about')->nullable();
             $table->string('phone')->unique();
-            $table->integer('bank_account_number')->unique();
+            $table->string('bank_account_number')->unique();
             $table->timestamps();
         });
     }

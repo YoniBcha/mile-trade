@@ -54,7 +54,7 @@
                                     <td>{{ $customer->first_name }}</td>
                                     <td>{{ $customer->last_name }}</td>
                                     <td>{{ $customer->birth_date }}</td>
-                                    <td>{{ $customer->phone }}</td> 
+                                    <td>{{ $customer->phone }}</td>
                                     <td>{{ $customer->email }}</td>
                                     <td>{{ $customer->bank_account_number }}</td>
                                     <td>
