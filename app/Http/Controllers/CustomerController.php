@@ -13,9 +13,15 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = Customer::all();
+        $customers = Customer::when($request->has('search'), function ($quary) use ($request) {
+            $quary->where('first_name', 'like', '%' . $request->search . '%')
+                ->orWhere('last_name', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->orWhere('phone', 'like', '%' . $request->search . '%')
+                ->orWhere('bank_account_number', 'like', '%' . $request->search . '%');
+        })->get();
         return view('customer.index', compact('customers'));
     }
 
@@ -39,7 +45,6 @@ class CustomerController extends Controller
             $fileName = '/uploads/' . $image->store('', 'public');
             $customer->image = $fileName;
         }
-
 
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
@@ -65,7 +70,6 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        // dd($customer);
         return view('customer.edit', compact('customer'));
     }
 
@@ -90,7 +94,7 @@ class CustomerController extends Controller
         $customer->phone = $request->phone;
         $customer->bank_account_number = $request->bank_account_number;
         $customer->update();
-        return redirect()->route('customers.index')->with('success', 'Customer created successfully.');
+        return redirect()->route('customers.index')->with('success', 'Customer updated successfully.');
     }
 
     /**
@@ -98,6 +102,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
+        File::delete(public_path($customer->image));
         $customer->delete();
         return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
     }

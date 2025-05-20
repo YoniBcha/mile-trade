@@ -12,10 +12,10 @@
                                 Customer</a>
                         </div>
                         <div class="col-md-6">
-                            <form action="">
+                            <form action="{{ route('customers.index') }}" method="GET">
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" placeholder="Search anything..."
-                                        aria-describedby="button-addon2">
+                                        aria-describedby="button-addon2" name="search" value="{{ request('search') }}">
                                     <button class="btn btn-outline-secondary" type="submit"
                                         id="button-addon2">Search</button>
                                 </div>
@@ -31,7 +31,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered" style="border: 1px solid #dddddd">
@@ -64,7 +63,8 @@
                                             class="ms-1 me-1"><i class="far fa-eye"></i></a>
 
                                         <form action="{{ route('customers.destroy', $customer->id) }}" method="POST"
-                                            class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                            class="d-inline"
+                                            onsubmit="return confirm(`Are you sure to delete customer {{ $customer->first_name }}?`)">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-link p-0" style="color: #2c2c2c;">
@@ -74,7 +74,6 @@
                                     </td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
