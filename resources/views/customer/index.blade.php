@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="row justify-content-center mt-5">
-        <div class="col-md-8">
+        <div class="col-md-11">
             <h3>Customers</h3>
             <div class="card">
                 <div class="card-header">
@@ -40,7 +40,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">First Name</th>
                                 <th scope="col">Last Name</th>
-                                <th scope="col">Date of Birth</th>
+                                <th scope="col">Birth Date</th>
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">BAN</th>
@@ -48,23 +48,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Jhone</td>
-                                <td>Deo</td>
-                                <td>7-7-2000</td>
-                                <td>881-6929-0200</td>
-                                <td>jhone@gmail.com</td>
-                                <td>1902982829282</td>
-                                <td>
-                                    <a href="" style="color: #2c2c2c;" class="ms-1 me-1"><i
-                                            class="far fa-edit"></i></a>
-                                    <a href="/customer-details.html" style="color: #2c2c2c;" class="ms-1 me-1"><i
-                                            class="far fa-eye"></i></a>
-                                    <a href="" style="color: #2c2c2c;" class="ms-1 me-1"><i
-                                            class="fas fa-trash-alt"></i></a>
-                                </td>
-                            </tr>
+                            @foreach ($customers as $customer)
+                                <tr>
+                                    <th scope="row">{{ $loop->iteration }}</th>
+                                    <td>{{ $customer->first_name }}</td>
+                                    <td>{{ $customer->last_name }}</td>
+                                    <td>{{ $customer->birth_date }}</td>
+                                    <td>{{ $customer->phone }}</td> 
+                                    <td>{{ $customer->email }}</td>
+                                    <td>{{ $customer->bank_account_number }}</td>
+                                    <td>
+                                        <a href="{{ route('customers.edit', $customer->id) }}" style="color: #2c2c2c;"
+                                            class="ms-1 me-1"><i class="far fa-edit"></i></a>
+                                        <a href="{{ route('customers.show', $customer->id) }}" style="color: #2c2c2c;"
+                                            class="ms-1 me-1"><i class="far fa-eye"></i></a>
+
+                                        <form action="{{ route('customers.destroy', $customer->id) }}" method="POST"
+                                            class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-link p-0" style="color: #2c2c2c;">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

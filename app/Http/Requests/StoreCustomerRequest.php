@@ -22,11 +22,14 @@ class StoreCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:3000',
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
+            'birth_date' => 'nullable|string|max:255|date',
             'email' => 'required|email|max:255|unique:customers,email',
-            'phone' => 'required|string|max:15',
+            'phone' => 'required|string|max:20',
             'bank_account_number' => 'required|string|max:20|unique:customers,bank_account_number',
+            'about' => 'nullable|string|max:500',
         ];
     }
 }

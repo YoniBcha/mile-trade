@@ -31,8 +31,18 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
         $customer = new Customer();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $fileName = '/uploads/' . $image->store('', 'public');
+            $customer->image = $fileName;
+        }
+
+
         $customer->first_name = $request->first_name;
         $customer->last_name = $request->last_name;
+        $customer->about = $request->about;
+        $customer->birth_date = $request->birth_date;
         $customer->email = $request->email;
         $customer->phone = $request->phone;
         $customer->bank_account_number = $request->bank_account_number;
@@ -45,7 +55,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        return view('customer.show', compact('customer'));
     }
 
     /**
@@ -53,7 +63,7 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        //
+        return view('customer.edit', compact('customer'));
     }
 
     /**
@@ -67,8 +77,15 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Customer $customer)
+    public function destroy(Request $request)
     {
-        //
+        $customer = Customer::find($request->id);
+        if ($customer) {
+            $customer->delete();
+            return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
+        } else {
+            return redirect()->route('customers.index')->with('error', 'Customer not found.');
+        }
+        return redirect()->route('customers.index')->with('success', 'Customer deleted successfully.');
     }
 }
