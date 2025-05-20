@@ -7,7 +7,7 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-md-4">
-                            <a href="/create-customer.html" class="btn fs-[1px]"
+                            <a href="{{ route('customers.create') }}" class="btn fs-[1px]"
                                 style="background-color: #4643d3; color: white;"><i class="fas fa-plus"></i> Create
                                 Customer</a>
                         </div>
