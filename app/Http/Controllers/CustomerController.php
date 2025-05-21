@@ -8,8 +8,6 @@ use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
 use Illuminate\Support\Facades\File;
 
-//new 
-
 class CustomerController extends Controller
 {
     /**
@@ -23,7 +21,7 @@ class CustomerController extends Controller
                 ->orWhere('email', 'like', '%' . $request->search . '%')
                 ->orWhere('phone', 'like', '%' . $request->search . '%')
                 ->orWhere('bank_account_number', 'like', '%' . $request->search . '%');
-        })->get();
+        })->orderBy('id', $request->has('order') ? $request->order : 'DESC')->get();
         return view('customer.index', compact('customers'));
     }
 
