@@ -8,16 +8,15 @@
                     <!-- Card Header with Responsive Actions -->
                     <div class="card-header bg-white">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-                            <h3 class="mb-3 mb-md-0">Customer List</h3>
+                            <h3 class="mb-3 mb-md-0">Customer Trash List</h3>
 
                             <div class="d-flex flex-column flex-md-row gap-3">
-                                <!-- Create Button -->
-                                <a href="{{ route('customers.create') }}" class="btn btn-primary">
-                                    <i class="fas fa-plus me-1"></i> Create Customer
-                                </a>
+                                <a href="{{ route('customers.index') }}" class="btn mb-3"
+                                    style="background-color: #4643d3; color: white;"><i class="fas fa-chevron-left"></i>
+                                    Back</a>
 
                                 <!-- Search Form -->
-                                <form action="{{ route('customers.index') }}" method="GET" class="flex-grow-1">
+                                <form action="{{ route('customers.trash') }}" method="GET" class="flex-grow-1">
                                     <div class="input-group">
                                         <input type="text" class="form-control" placeholder="Search customers..."
                                             name="search" value="{{ request('search') }}">
@@ -34,11 +33,6 @@
                                         <option value="asc" @selected(request()->order == 'asc')>Oldest First</option>
                                     </select>
                                 </form>
-
-                                <!-- Trash Button -->
-                                <a href="{{ route('customers.trash') }}" class="btn btn-danger">
-                                    <i class="fas fa-trash-alt me-1"></i> Trash
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -78,29 +72,32 @@
                                                         <i class="far fa-eye"></i>
                                                     </a>
 
-                                                    <!-- Edit Button -->
-                                                    <a href="{{ route('customers.edit', $customer->id) }}"
-                                                        class="btn btn-sm " title="Edit">
-                                                        <i class="far fa-edit"></i>
-                                                    </a>
+                                                    <form action="{{ route('customers.restore', $customer->id) }}"
+                                                        method="POST" class="d-inline">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="submit" class="btn btn-sm" title="Restore">
+                                                            <i class="fas fa-undo"></i>
+                                                        </button>
+                                                    </form>
 
                                                     <!-- Delete Button -->
-                                                    <form action="{{ route('customers.destroy', $customer->id) }}"
+                                                    <form action="{{ route('customers.force-delete', $customer->id) }}"
                                                         method="POST"
-                                                        onsubmit="return confirm('Delete {{ $customer->first_name }}?')">
+                                                        onsubmit="return confirm('Delete Permanently Customer Data of {{ $customer->first_name }}?')">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm"
-                                                            title="Delete">
+                                                        <button type="submit" class="btn btn-sm" title="Delete">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
-                                                </div>  
+                                                </div>
                                             </td>
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="8" class="text-center text-muted py-4">No customers found</td>
+                                            <td colspan="8" class="text-center text-muted py-4">No Trahsed customers
+                                                found</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

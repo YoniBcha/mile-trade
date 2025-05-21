@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('about')->nullable();
             $table->string('phone')->unique();
             $table->string('bank_account_number')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -31,5 +32,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('customers');
+        
     }
 };

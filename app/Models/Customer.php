@@ -2,10 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Customer extends Model
 {
+    use SoftDeletes, HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+
     protected $fillable = [
         'image',
         'first_name',
@@ -14,6 +24,6 @@ class Customer extends Model
         'phone',
         'birth_date',
         'about',
-        'bank_account_number',
+        'bank_account_number', 
     ];
 }
